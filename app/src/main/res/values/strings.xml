@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Chatter</string>
+    <string name="phoneNumberHint">+91XXXXXXXXXX</string>
+    <string name="resetBtnText">Reset</string>
+    <string name="sendOtpButtonText">Send OTP</string>
+    <string name="enterOtpHint">Enter the OTP sent via SMS</string>
+    <string name="verifyButtonText">Verify</string>
 </resources>

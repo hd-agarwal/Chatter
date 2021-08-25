@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,81 +15,82 @@
             android:id="@+id/etPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:autofillHints="phone"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/phoneNumberHint"
             android:inputType="phone"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnReset"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginVertical="20dp"
-            android:autofillHints="phone" />
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/btnReset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:text="@string/resetBtnText"
-            app:layout_constraintStart_toEndOf="@id/etPhone"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBaseline_toBaselineOf="@id/etPhone"
-            android:enabled="false"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/etPhone" />
 
         <Button
             android:id="@+id/btnSendOTP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:enabled="false"
             android:text="@string/sendOtpButtonText"
             android:textAllCaps="false"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPhone"
-            android:layout_marginTop="20dp"
-            android:enabled="false"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPhone" />
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnSendOTP"
-            android:visibility="invisible"
-            />
+            app:layout_constraintTop_toBottomOf="@id/btnSendOTP" />
 
         <EditText
             android:id="@+id/etOTP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/enterOtpHint"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/progressBar"
             android:layout_marginTop="50dp"
-            tools:ignore="Autofill"
-            android:inputType="number"
             android:enabled="false"
+            android:gravity="center"
+            android:hint="@string/enterOtpHint"
+            android:inputType="number"
             android:maxLength="6"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBar"
+            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/btnVerify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/verifyButtonText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etOTP"
             android:enabled="false"
-            android:visibility="invisible"/>
+            android:text="@string/verifyButtonText"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etOTP" />
+
         <ProgressBar
+            android:id="@+id/progressBarVerify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBarVerify"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnVerify"
-            android:visibility="invisible"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnVerify" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

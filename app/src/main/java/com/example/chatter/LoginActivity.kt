@@ -57,7 +57,8 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this@LoginActivity, "OTP sent", Toast.LENGTH_SHORT).show()
             updateUI(UIState.ENTER_OTP)
             _binding.btnVerify.setOnClickListener {
-                val credential = PhoneAuthProvider.getCredential(verificationId, _binding.etOTP.text.toString())
+                val credential =
+                    PhoneAuthProvider.getCredential(verificationId, _binding.etOTP.text.toString())
                 updateUI(UIState.VERIFYING_OTP)
                 signInWithPhoneAuthCredential(credential)
             }
@@ -81,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
+
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
@@ -95,35 +97,42 @@ class LoginActivity : AppCompatActivity() {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         // The verification code entered was invalid
-                        Toast.makeText(this@LoginActivity, "Incorrect OTP", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "Incorrect OTP", Toast.LENGTH_SHORT)
+                            .show()
                         updateUI(UIState.ENTER_OTP)
-                    }
-                    else{
-                        Toast.makeText(this@LoginActivity, "Verification Failed", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Verification Failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         updateUI(UIState.ENTER_PHONE)
                     }
                 }
             }
     }
 
-    private fun initUI()
-    {
+    private fun initUI() {
+        this.title = "Login with phone"
         _binding.btnSendOTP.setOnClickListener {
-            var phone=_binding.etPhone.text.toString()
-            if((phone.startsWith("+")&&phone.length<13)||phone.length<10){
-                Toast.makeText(this@LoginActivity, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
+            var phone = _binding.etPhone.text.toString()
+            if ((phone.startsWith("+") && phone.length < 13) || phone.length < 10) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Please enter a valid phone number",
+                    Toast.LENGTH_SHORT
+                ).show()
                 updateUI(UIState.ENTER_PHONE)
-            }
-            else {
+            } else {
                 updateUI(UIState.SENDING_OTP)
-                if(phone.length==10)
-                    phone= "+91$phone"
+                if (phone.length == 10)
+                    phone = "+91$phone"
                 initiateLogin(phone)
             }
         }
         _binding.btnReset.setOnClickListener {
             updateUI(UIState.ENTER_PHONE)
-            _binding.etPhone.apply{
+            _binding.etPhone.apply {
                 setText("")
             }
         }
@@ -136,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (_binding.etPhone.text.toString().isNullOrEmpty()) {
+                if (_binding.etPhone.text.toString().isEmpty()) {
                     _binding.btnReset.apply {
                         isEnabled = false
                     }
@@ -154,7 +163,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
         })
-        _binding.etOTP.addTextChangedListener(object:TextWatcher{
+        _binding.etOTP.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -163,7 +172,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (_binding.etOTP.text.toString().isNullOrEmpty()) {
+                if (_binding.etOTP.text.toString().isEmpty()) {
                     _binding.btnVerify.apply {
                         isEnabled = false
                     }
@@ -175,118 +184,121 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    enum class UIState{
+
+    enum class UIState {
         ENTER_PHONE,
         SENDING_OTP,
         ENTER_OTP,
         VERIFYING_OTP
     }
-    fun updateUI(uiState:UIState)=when(uiState){
+
+    fun updateUI(uiState: UIState) = when (uiState) {
         UIState.ENTER_PHONE -> {
             _binding.etPhone.apply {
-                isEnabled=true
-                visibility= View.VISIBLE
+                isEnabled = true
+                visibility = View.VISIBLE
             }
-            _binding.progressBar.apply{
-                visibility=View.INVISIBLE
+            _binding.progressBar.apply {
+                visibility = View.INVISIBLE
             }
-            _binding.btnVerify.apply{
-                visibility=View.INVISIBLE
+            _binding.btnVerify.apply {
+                visibility = View.INVISIBLE
             }
-            _binding.etOTP.apply{
-                isEnabled=false
-                visibility=View.INVISIBLE
+            _binding.etOTP.apply {
+                isEnabled = false
+                visibility = View.INVISIBLE
             }
-            _binding.btnReset.apply{
-                visibility=View.VISIBLE
+            _binding.btnReset.apply {
+                visibility = View.VISIBLE
             }
-            _binding.btnSendOTP.apply{
-                visibility=View.VISIBLE
+            _binding.btnSendOTP.apply {
+                visibility = View.VISIBLE
             }
-            _binding.progressBarVerify.apply{
-                visibility=View.INVISIBLE
+            _binding.progressBarVerify.apply {
+                visibility = View.INVISIBLE
             }
         }
         UIState.SENDING_OTP -> {
             _binding.etPhone.apply {
-                isEnabled=false
-                visibility= View.VISIBLE
+                isEnabled = false
+                visibility = View.VISIBLE
             }
-            _binding.progressBar.apply{
-                visibility=View.VISIBLE
+            _binding.progressBar.apply {
+                visibility = View.VISIBLE
             }
-            _binding.btnVerify.apply{
-                visibility=View.VISIBLE
+            _binding.btnVerify.apply {
+                visibility = View.VISIBLE
             }
-            _binding.etOTP.apply{
-                isEnabled=true
-                visibility=View.VISIBLE
+            _binding.etOTP.apply {
+                isEnabled = true
+                visibility = View.VISIBLE
             }
-            _binding.btnReset.apply{
-                visibility=View.VISIBLE
-                isEnabled=false
+            _binding.btnReset.apply {
+                visibility = View.VISIBLE
+                isEnabled = false
             }
-            _binding.btnSendOTP.apply{
-                visibility=View.VISIBLE
-                isEnabled=false
+            _binding.btnSendOTP.apply {
+                visibility = View.VISIBLE
+                isEnabled = false
             }
-            _binding.progressBarVerify.apply{
-                visibility=View.INVISIBLE
+            _binding.progressBarVerify.apply {
+                visibility = View.INVISIBLE
             }
         }
         UIState.ENTER_OTP -> {
             _binding.etPhone.apply {
-                isEnabled=false
-                visibility= View.VISIBLE
+                isEnabled = false
+                visibility = View.VISIBLE
             }
-            _binding.progressBar.apply{
-                visibility=View.INVISIBLE
+            _binding.progressBar.apply {
+                visibility = View.INVISIBLE
             }
-            _binding.btnVerify.apply{
-                visibility=View.VISIBLE
+            _binding.btnVerify.apply {
+                visibility = View.VISIBLE
             }
-            _binding.etOTP.apply{
-                isEnabled=true
-                visibility=View.VISIBLE
+            _binding.etOTP.apply {
+                isEnabled = true
+                visibility = View.VISIBLE
+                setText("")
             }
-            _binding.btnReset.apply{
-                visibility=View.VISIBLE
-                isEnabled=true
+            _binding.btnReset.apply {
+                visibility = View.VISIBLE
+                isEnabled = true
             }
-            _binding.btnSendOTP.apply{
-                visibility=View.VISIBLE
-                isEnabled=false
+            _binding.btnSendOTP.apply {
+                visibility = View.VISIBLE
+                isEnabled = false
             }
-            _binding.progressBarVerify.apply{
-                visibility=View.INVISIBLE
+            _binding.progressBarVerify.apply {
+                visibility = View.INVISIBLE
             }
         }
-        UIState.VERIFYING_OTP->{
+        UIState.VERIFYING_OTP -> {
             _binding.etPhone.apply {
-                isEnabled=false
-                visibility= View.VISIBLE
+                isEnabled = false
+                visibility = View.VISIBLE
             }
-            _binding.progressBar.apply{
-                visibility=View.INVISIBLE
+            _binding.progressBar.apply {
+                visibility = View.INVISIBLE
             }
-            _binding.btnVerify.apply{
-                visibility=View.VISIBLE
-                isEnabled=false
+            _binding.btnVerify.apply {
+                visibility = View.VISIBLE
+                isEnabled = false
             }
-            _binding.etOTP.apply{
-                isEnabled=false
-                visibility=View.VISIBLE
+            _binding.etOTP.apply {
+                isEnabled = false
+                visibility = View.VISIBLE
             }
-            _binding.btnReset.apply{
-                visibility=View.VISIBLE
-                isEnabled=false
+            _binding.btnReset.apply {
+                visibility = View.VISIBLE
+                isEnabled = false
             }
-            _binding.btnSendOTP.apply{
-                visibility=View.VISIBLE
-                isEnabled=false
+            _binding.btnSendOTP.apply {
+                visibility = View.VISIBLE
+                isEnabled = false
             }
-            _binding.progressBarVerify.apply{
-                visibility=View.VISIBLE
+            _binding.progressBarVerify.apply {
+                visibility = View.VISIBLE
             }
         }
     }

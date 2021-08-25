@@ -1,8 +1,24 @@
 <resources>
+    <!--    Firestore realtime database keys-->
+    <string name="users">users</string>
+    <string name="username">username</string>
+    <string name="status">status</string>
+    <string name="phone_number">phone_number</string>
+    <string name="photo_url">photo_url</string>
+
+
     <string name="app_name">Chatter</string>
     <string name="phoneNumberHint">+91XXXXXXXXXX</string>
     <string name="resetBtnText">Reset</string>
     <string name="sendOtpButtonText">Send OTP</string>
     <string name="enterOtpHint">Enter the OTP sent via SMS</string>
     <string name="verifyButtonText">Verify</string>
+    <string name="add_profile_picture_button_text">Add profile picture</string>
+    <string name="username_hint_text">Username</string>
+    <string name="status_hint_text">Status</string>
+    <string name="default_status">Hi! I am on Chatter</string>
+    <string name="skip_button_text">Skip</string>
+    <string name="continue_button_text">Continue</string>
+    <string name="change_profile_button_text">Change</string>
+    <string name="delete_profile_pic">Delete profile pic</string>
 </resources>

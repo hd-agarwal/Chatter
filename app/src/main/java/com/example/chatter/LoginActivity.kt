@@ -1,5 +1,6 @@
 package com.example.chatter
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -8,9 +9,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.chatter.databinding.ActivityLoginBinding
+import com.example.chatter.models.User
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
+import com.google.firebase.database.FirebaseDatabase
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
@@ -20,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var _binding: ActivityLoginBinding
     private val auth = FirebaseAuth.getInstance()
+    private val firebaseDatabase = FirebaseDatabase.getInstance().reference
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
             Log.d(TAG, "onVerificationCompleted:$credential")
@@ -66,8 +70,19 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (auth.currentUser != null) {
+            intent = Intent(this, DashboardActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         _binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(_binding.root)
         initUI()
@@ -89,9 +104,16 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-// TODO: 25/08/21 login successful
                     Toast.makeText(this, "Successfully signed in", Toast.LENGTH_SHORT).show()
-                    val user = task.result?.user
+                    val usersRef = task.result?.user?.uid?.let {
+                        firebaseDatabase.child(getString(R.string.users)).child(
+                            it
+                        )
+                    }
+                    usersRef?.setValue(User(phone_number = task.result?.user?.phoneNumber))
+                    startActivity(Intent(this, CreateUserProfileActivity::class.java))
+                    finish()
+//                    val user = task.result?.user
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.w(TAG, "signInWithCredential:failure", task.exception)

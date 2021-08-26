@@ -6,4 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/dashboardBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
+<!--        android:background="?android:attr/windowBackground"/>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

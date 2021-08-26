@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_baseline_group_24"
         android:title="@string/groups" />
     <item
-        android:id="@+id/Contacts"
+        android:id="@+id/miContacts"
         android:icon="@drawable/ic_baseline_contacts_24"
         android:title="@string/contacts" />
 </menu>

@@ -24,4 +24,6 @@
     <string name="chats">Chats</string>
     <string name="groups">Groups</string>
     <string name="contacts">Contacts</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello CONTACTS fragment</string>
 </resources>

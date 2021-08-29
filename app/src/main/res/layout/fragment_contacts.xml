@@ -36,4 +36,12 @@
         android:layout_height="match_parent"
         android:layout_below="@id/cvShareApp"
         android:id="@+id/rvContacts"/>
+    <TextView
+        android:id="@+id/tvPermissionDenied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Permission denied"
+        android:textSize="30sp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>

@@ -17,21 +17,21 @@ class UserAdapter(
     class UserHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvContactName: TextView =itemView.findViewById(R.id.tvContactName)
         val ivUserProfile: ImageView =itemView.findViewById(R.id.ivUserPhoto)
-        val tvContactPhone: TextView =itemView.findViewById(R.id.tvContactPhone)
+        val tvStatus: TextView =itemView.findViewById(R.id.tvStatus)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.layout_contact, parent, false)
+        val view = inflater.inflate(R.layout.layout_user, parent, false)
         return UserHolder(view)
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-        Glide.with(context).load(usersList[position].photo_url)
+        Glide.with(context).load(usersList[position].imageUrl)
                     .placeholder(R.drawable.ic_default_profile_foreground)
                     .into(holder.ivUserProfile)
-                holder.tvContactName.apply { text=usersList[position].username }
-                holder.tvContactPhone.apply{ text=usersList[position].phone_number}
+                holder.tvContactName.apply { text=usersList[position].name }
+//                holder.tvStatus.apply{ text=usersList[position].phone_number}
     }
 
     override fun getItemCount()=usersList.size

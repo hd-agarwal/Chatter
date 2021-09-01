@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateUserProfileActivity">
+    tools:context=".activities.CreateUserProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textInputLayoutUsername"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etStatus"
@@ -103,12 +103,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:padding="10dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/skip_button_text"
-            android:id="@+id/btnSkip"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

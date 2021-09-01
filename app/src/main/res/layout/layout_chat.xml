@@ -29,20 +29,24 @@
             android:layout_toEndOf="@id/ivUserPhoto"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textColor="?attr/colorOnBackground"
             android:text="Name"
             android:textSize="23sp"
             android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/tvMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/tvContactName"
             android:layout_below="@id/tvContactName"
-            android:layout_margin="5dp"
-            android:text="+917668451175"
-            android:textSize="15sp"
+            android:layout_alignLeft="@id/tvContactName"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:id="@+id/tvContactPhone"/>
+            android:text="Hello"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 

@@ -14,22 +14,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chatter.models.Contact
 import com.example.chatter.models.User
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_contacts.*
+import kotlinx.android.synthetic.main.fragment_people.*
 import java.io.File
 import java.io.FileOutputStream
 
 
 class ContactsFragment : Fragment() {
-    companion object{
-        const val REQUEST_READ_CONTACTS=32
+    companion object {
+        const val REQUEST_READ_CONTACTS = 32
     }
 
-    private val usersList=ArrayList<User>()
-    private val contactsList=ArrayList<Contact>()
+    private val usersList = ArrayList<User>()
+    private val contactsList = ArrayList<Contact>()
     private val query: Query = FirebaseDatabase.getInstance()
         .reference
         .child("users")
@@ -69,57 +67,68 @@ class ContactsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contacts, container, false)
+        return inflater.inflate(R.layout.fragment_people, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_CONTACTS)
-            == PackageManager.PERMISSION_GRANTED) {
-            contactsList.addAll(readContacts())
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.READ_CONTACTS
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+//            logContacts()
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.READ_CONTACTS),
-                REQUEST_READ_CONTACTS)
+            Log.d("TAG", "onViewCreated: calling requestPermissions")
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(android.Manifest.permission.READ_CONTACTS),
+                REQUEST_READ_CONTACTS
+            )
         }
 
-        for(contact in contactsList)
-        Log.d("TAG", "onViewCreated: "+contact.contactID+";;"+contact.contactEmail+";;"+contact.contactName+";;"+contact.contactNumber+";;"+contact.contactOtherDetails)
-        rvContacts.layoutManager= LinearLayoutManager(requireContext())
-
-        val adapter=UserAdapter(usersList, requireContext())
-
-        rvContacts.adapter=adapter
-
-        val childEventListener: ChildEventListener = object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                // ...
-
-//                dataSnapshot.getValue<User>()?.let { users.add(it) }
-//                Log.d("TAG", "onChildAdded: "+users)
-//                adapter.notifyDataSetChanged()
-            }
-
-            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                // ...
-            }
-
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                // ...
-            }
-
-            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                // ...
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // ...
-            }
-        }
-        query.addChildEventListener(childEventListener)
-
+//        for (contact in contactsList)
+//            Log.d(
+//                "TAG",
+//                "onViewCreated: " + contact.contactID + ";;" + contact.contactEmail + ";;" + contact.contactName + ";;" + contact.contactNumber + ";;" + contact.contactOtherDetails
+//            )
+//        rvContacts.layoutManager = LinearLayoutManager(requireContext())
+//
+//        val adapter = UserAdapter(usersList, requireContext())
+//
+//        rvContacts.adapter = adapter
+//
+//        val childEventListener: ChildEventListener = object : ChildEventListener {
+//            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+//                // ...
+//
+////                dataSnapshot.getValue<User>()?.let { users.add(it) }
+////                Log.d("TAG", "onChildAdded: "+users)
+////                adapter.notifyDataSetChanged()
+//            }
+//
+//            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
+//                // ...
+//            }
+//
+//            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+//                // ...
+//            }
+//
+//            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
+//                // ...
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                // ...
+//            }
+//        }
+//        query.addChildEventListener(childEventListener)
+//
 
     }
-//    override fun onStart() {
+
+    //    override fun onStart() {
 //        super.onStart()
 //        Log.d("TAG", "onStart: ")
 //        adapter.startListening()
@@ -129,24 +138,25 @@ class ContactsFragment : Fragment() {
 //        Log.d("TAG", "onStop: ")
 //        adapter.stopListening()
 //    }
-override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>, grantResults: IntArray
-) {
-    super.onRequestPermissionsResult(requestCode,permissions,grantResults)
-    when (requestCode) {
-        REQUEST_READ_CONTACTS -> {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                contactsList.addAll(readContacts())
-            } else {
-                // permission denied,Disable the
-                // functionality that depends on this permission.
-                Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
-            }
-            return
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>, grantResults: IntArray
+    ) {
+        Log.d("TAG", "onRequestPermissionsResult: inside")
+        if (requestCode== REQUEST_READ_CONTACTS && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.d("TAG", "onRequestPermissionsResult: permission is granted")
+        } else {
+            // permission denied,Disable the
+            // functionality that depends on this permission.
+//            tvPermissionDenied.apply {
+//                visibility = View.VISIBLE
+//            }
+            Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
         }
+
+
     }
-}
+
     private fun readContacts(): ArrayList<Contact> {
         val contactList: ArrayList<Contact> = ArrayList()
         val uri: Uri = ContactsContract.Contacts.CONTENT_URI // Contact URI
@@ -193,7 +203,7 @@ override fun onRequestPermissionsResult(
                     var homeEmail = ""
                     var workEmail = ""
                     var companyName = ""
-                    var title :String?= ""
+                    var title: String? = ""
 
                     // This strings stores all contact numbers, email and other
                     // details like nick name, company etc.
@@ -208,7 +218,7 @@ override fun onRequestPermissionsResult(
                                 .getString(
                                     dataCursor
                                         .getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
-                                ) // get
+                                ).orEmpty() // get
                             // the
                             // contact
                             // name
@@ -309,7 +319,7 @@ override fun onRequestPermissionsResult(
                                     companyName = dataCursor.getString(
                                         dataCursor
                                             .getColumnIndex("data1")
-                                    ) .orEmpty()// get company
+                                    ).orEmpty()// get company
                                     // name
                                     contactOtherDetails += ("Coompany Name : "
                                             + companyName + "n")
@@ -370,13 +380,13 @@ override fun onRequestPermissionsResult(
                                 }
                             } while (dataCursor.moveToNext()) // Now move to next
                             // cursor
-                            contactList.add(
-                                Contact(
-                                    contctId.toString(),
-                                    displayName, contactNumbers, contactEmailAddresses,
-                                    photoPath, contactOtherDetails
-                                )
-                            ) // Finally add
+//                            contactList.add(
+//                                Contact(
+//                                    contctId.toString(),
+//                                    displayName, contactNumbers, contactEmailAddresses,
+//                                    contactOtherDetails
+//                                )
+//                            ) // Finally add
                             // items to
                             // array list
                         }

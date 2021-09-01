@@ -1,20 +1,23 @@
 package com.example.chatter.models
 
-class User {
-    var username: String? = null
-    var status: String? = null
-    var phone_number: String? = null
-    var photo_url: String? = null
-    var groups: Array<String>? = null
-    var chats: Array<String>? = null
+import java.util.*
 
-    constructor() {} // Needed for Firebase
-    constructor(username: String?, status: String?, phone_number: String?,photo_url:String?,groups:Array<String>?,chats:Array<String>?) {
-        this.username = username
-        this.status = status
-        this.phone_number = phone_number
-        this.photo_url = photo_url
-        this.groups = groups
-        this.chats = chats
-    }
+data class User(
+    public val name: String,
+    public val imageUrl: String?,
+    public val thumbUrl: String?,
+    public val uid: String,
+    public val status: String?,
+    public val deviceToken: String,
+    public val lastOnline: Date,
+    public val onlineStatus:String
+) {
+    constructor() : this("", "", "", "", "", "", Date(System.currentTimeMillis()),"online")
+    constructor(
+        name: String,
+        imageUrl: String?,
+        thumbUrl: String?,
+        uid: String,
+        status: String?
+    ) : this(name, imageUrl, thumbUrl, uid, status, "", Date(System.currentTimeMillis()),"online")
 }

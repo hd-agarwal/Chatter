@@ -13,21 +13,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chatter">
         <activity
-            android:name=".DashboardActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Chatter.Dashboard"/>
-        <activity
-            android:name=".CreateUserProfileActivity"
+            android:name=".activities.ChatActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
-            android:exported="true">
+            android:name=".activities.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.SignInActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Chatter.Dashboard" />
+        <activity
+            android:name=".activities.CreateUserProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

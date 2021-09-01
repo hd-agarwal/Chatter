@@ -110,7 +110,9 @@ class LoginActivity : AppCompatActivity() {
                             it
                         )
                     }
-                    usersRef?.setValue(User(phone_number = task.result?.user?.phoneNumber))
+                    val map : MutableMap<String,Any?> = HashMap()
+                    map["phone_number"] = task.result?.user?.phoneNumber
+                    usersRef?.updateChildren(map)
                     startActivity(Intent(this, CreateUserProfileActivity::class.java))
                     finish()
 //                    val user = task.result?.user

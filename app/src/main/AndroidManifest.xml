@@ -3,6 +3,7 @@
     package="com.example.chatter">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,8 @@
         android:theme="@style/Theme.Chatter">
         <activity
             android:name=".DashboardActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Chatter.Dashboard"/>
         <activity
             android:name=".CreateUserProfileActivity"
             android:exported="true" />

@@ -14,11 +14,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chatter.adapters.UserAdapter
 import com.example.chatter.models.User
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_contacts.*
+import kotlinx.android.synthetic.main.fragment_people.*
 import java.io.File
 import java.io.FileOutputStream
 
@@ -69,7 +67,7 @@ class ContactsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contacts, container, false)
+        return inflater.inflate(R.layout.fragment_people, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -150,9 +148,9 @@ class ContactsFragment : Fragment() {
         } else {
             // permission denied,Disable the
             // functionality that depends on this permission.
-            tvPermissionDenied.apply {
-                visibility = View.VISIBLE
-            }
+//            tvPermissionDenied.apply {
+//                visibility = View.VISIBLE
+//            }
             Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
         }
 

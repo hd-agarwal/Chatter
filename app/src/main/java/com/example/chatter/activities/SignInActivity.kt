@@ -1,10 +1,11 @@
-package com.example.chatter
+package com.example.chatter.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chatter.R
 import com.example.chatter.databinding.ActivitySignInBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig.PhoneBuilder
@@ -15,8 +16,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 
 class SignInActivity : AppCompatActivity() {
-    val auth = FirebaseAuth.getInstance()
-    private lateinit var _binding:ActivitySignInBinding
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private lateinit var _binding: ActivitySignInBinding
 
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
@@ -44,6 +45,7 @@ class SignInActivity : AppCompatActivity() {
             .build()
         signInLauncher.launch(signInIntent)
     }
+
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         Log.d("TAG", "onSignInResult: inside onSignInResult")
@@ -51,7 +53,8 @@ class SignInActivity : AppCompatActivity() {
             // Successfully signed in
             Log.d("TAG", "onSignInResult: Signed in successfully")
             startActivity(
-                Intent(this,DashboardActivity::class.java))
+                Intent(this, CreateUserProfileActivity::class.java)
+            )
             finish()
         } else {
             Log.d("TAG", "onSignInResult: Sign in failed")
@@ -85,12 +88,14 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding= ActivitySignInBinding.inflate(layoutInflater)
-        setContentView(_binding.root)
+//        _binding = ActivitySignInBinding.inflate(layoutInflater)
+//        setContentView(_binding.root)
+        Thread.sleep(1000)
         if (auth.currentUser != null) {
             // already signed in
             startActivity(
-                Intent(this,DashboardActivity::class.java))
+                Intent(this, MainActivity::class.java)
+            )
             finish()
         } else {
             // not signed in

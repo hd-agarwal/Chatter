@@ -8,8 +8,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.chatter.activities.CreateUserProfileActivity
 import com.example.chatter.databinding.ActivityLoginBinding
-import com.example.chatter.models.User
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*

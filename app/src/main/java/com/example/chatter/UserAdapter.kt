@@ -1,4 +1,4 @@
-package com.example.chatter.adapters
+package com.example.chatter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.chatter.R
 import com.example.chatter.models.User
 
 class UserAdapter(
@@ -28,11 +27,11 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-        Glide.with(context).load(usersList[position].photo_url)
+        Glide.with(context).load(usersList[position].imageUrl)
                     .placeholder(R.drawable.ic_default_profile_foreground)
                     .into(holder.ivUserProfile)
-                holder.tvContactName.apply { text=usersList[position].username }
-                holder.tvStatus.apply{ text=usersList[position].phone_number}
+                holder.tvContactName.apply { text=usersList[position].name }
+//                holder.tvStatus.apply{ text=usersList[position].phone_number}
     }
 
     override fun getItemCount()=usersList.size

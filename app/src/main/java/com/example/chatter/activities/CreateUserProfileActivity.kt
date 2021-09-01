@@ -1,26 +1,28 @@
-package com.example.chatter
+package com.example.chatter.activities
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.example.chatter.R
 import com.example.chatter.databinding.ActivityCreateUserProfileBinding
+import com.example.chatter.models.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class CreateUserProfileActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityCreateUserProfileBinding
-    private val firebaseStorage = FirebaseStorage.getInstance().reference
-    private val firebaseAuth = FirebaseAuth.getInstance()
-    private val firebaseDatabase = FirebaseDatabase.getInstance().reference
+    private val firebaseStorage by lazy { FirebaseStorage.getInstance().reference }
+    private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val firestore by lazy { FirebaseFirestore.getInstance() }
     private var uri: Uri? = null
     private var username: String? = null
     private var status: String? = null
@@ -39,7 +41,7 @@ class CreateUserProfileActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        this.title = "Personal details"
+        this.title = "Create profile"
         _binding.btnProfilePic.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     applicationContext,
@@ -55,13 +57,11 @@ class CreateUserProfileActivity : AppCompatActivity() {
                 )
             }
         }
-        _binding.btnSkip.setOnClickListener {
-            intent = Intent(this, DashboardActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-        }
         _binding.btnContinue.setOnClickListener {
+            if (_binding.etUsername.text.toString().isEmpty()) {
+                Toast.makeText(this, "Please fill username", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             updateProfile()
             updateUI(true)
 
@@ -87,9 +87,6 @@ class CreateUserProfileActivity : AppCompatActivity() {
         _binding.btnContinue.apply {
             isEnabled = !isUploading
         }
-        _binding.btnSkip.apply {
-            isEnabled = !isUploading
-        }
         _binding.btnProfilePic.apply {
             isEnabled = !isUploading
         }
@@ -104,8 +101,8 @@ class CreateUserProfileActivity : AppCompatActivity() {
     private fun selectFile() {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select an image"), SELECT_FILE_CODE)
+        intent.action = Intent.ACTION_PICK
+        startActivityForResult(intent, SELECT_FILE_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -127,7 +124,7 @@ class CreateUserProfileActivity : AppCompatActivity() {
             uri = data.data!!
             isFileSelected = true
             _binding.btnProfilePic.apply {
-                text = context.getString(R.string.change_profile_button_text)
+                text = getString(R.string.change_profile_button_text)
             }
             Glide.with(this).load(uri)
                 .placeholder(R.drawable.ic_default_profile_foreground)
@@ -180,27 +177,53 @@ class CreateUserProfileActivity : AppCompatActivity() {
     }
 
     private fun updateDatabase(map: MutableMap<String, Any?>) {
-        firebaseAuth.currentUser?.let {
-            firebaseDatabase.child(getString(R.string.users)).child(it.uid).updateChildren(map)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Profile created successfully!", Toast.LENGTH_SHORT)
-                        .show()
-                    updateUI(false)
-                    intent = Intent(this, DashboardActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }
-                .addOnFailureListener {
-                    Toast.makeText(
-                        this,
-                        "An error occurred! Profile not created",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    updateUI(false)
-                }
-        }
+        val user = User(
+            map[getString(R.string.username)] as String,
+            map[getString(R.string.photo_url)] as String?,
+            map[getString(R.string.photo_url)] as String?,
+            firebaseAuth.currentUser!!.uid,
+            map[getString(R.string.status)] as String?
+        )
+
+        firestore.collection("users").document(firebaseAuth.currentUser!!.uid).set(user)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Profile created successfully!", Toast.LENGTH_SHORT)
+                    .show()
+                updateUI(false)
+                intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    this,
+                    "An error occurred! Profile not created",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                updateUI(false)
+            }
+//        firebaseAuth.currentUser?.let {
+//
+//            firebaseDatabase.child(getString(R.string.users)).child(it.uid).updateChildren(map)
+//                .addOnSuccessListener {
+//                    Toast.makeText(this, "Profile created successfully!", Toast.LENGTH_SHORT)
+//                        .show()
+//                    updateUI(false)
+//                    intent = Intent(this, DashboardActivity::class.java)
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    startActivity(intent)
+//                }
+//                .addOnFailureListener {
+//                    Toast.makeText(
+//                        this,
+//                        "An error occurred! Profile not created",
+//                        Toast.LENGTH_SHORT
+//                    )
+//                        .show()
+//                    updateUI(false)
+//                }
+//        }
     }
 
 

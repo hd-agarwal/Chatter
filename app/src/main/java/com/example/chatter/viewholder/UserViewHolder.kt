@@ -1,6 +1,7 @@
 package com.example.chatter.viewholder
 
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -37,7 +38,9 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .into(this)
             visibility = View.VISIBLE
         }
+        Log.d("TAG", "bindView: clicklistener set")
         setOnClickListener {
+
             onClick.invoke(user.name,user.uid,user.imageUrl)
         }
     }

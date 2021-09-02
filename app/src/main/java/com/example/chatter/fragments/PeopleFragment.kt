@@ -2,6 +2,7 @@ package com.example.chatter.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,6 +139,7 @@ class PeopleFragment : Fragment() {
                         intent.putExtra(NAME, name)
                         intent.putExtra(UID, uid)
                         intent.putExtra(IMAGE_URL, imageUrl)
+                        Log.d("TAG", "onBindViewHolder: Starting chat activity")
                         startActivity(intent)
                     }
                 } else {

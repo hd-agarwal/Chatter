@@ -20,6 +20,8 @@
         <entry key="app/src/main/res/layout/layout_contact.xml" value="0.2775800711743772" />
         <entry key="app/src/main/res/layout/layout_empty.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/layout_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_chat_received.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_chat_sent.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1984375" />
       </map>
     </option>
@@ -29,5 +31,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.33" />
+      </ProjectState>
+    </option>
   </component>
 </project>

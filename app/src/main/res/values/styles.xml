@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ChatSentShapeAppearance">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSizeBottomRight">8dp</item>
+    </style>
+
+    <style name="ChatReceivedShapeAppearance">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSizeBottomLeft">8dp</item>
+    </style>
+</resources>

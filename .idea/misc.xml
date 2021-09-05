@@ -5,7 +5,10 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/drawable/count_background.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_chat_send.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/drawable/ic_defaultProfile_foreground.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_create_user_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1984375" />

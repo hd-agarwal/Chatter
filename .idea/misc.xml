@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/layout_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_chat_received.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_chat_sent.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_date_header.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1984375" />
       </map>
     </option>

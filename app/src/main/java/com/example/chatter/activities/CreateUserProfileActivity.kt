@@ -145,8 +145,8 @@ class CreateUserProfileActivity : AppCompatActivity() {
             status = _binding.etStatus.text.toString()
         }
         val map: MutableMap<String, Any?> = HashMap()
-        map[getString(R.string.username)] = username
-        map[getString(R.string.status)] = status
+        map[getString(R.string.fr_users_name)] = username
+        map[getString(R.string.fr_users_status)] = status
 
         if (isFileSelected) {
             uri?.let { uploadPhoto(it, map) }
@@ -157,11 +157,11 @@ class CreateUserProfileActivity : AppCompatActivity() {
 
     private fun uploadPhoto(uri: Uri, map: MutableMap<String, Any?>) {
         firebaseAuth.currentUser?.let {
-            firebaseStorage.child("profile_photos")
+            firebaseStorage.child(getString(R.string.st_profile_photos))
                 .child(it.uid).putFile(uri).addOnSuccessListener { taskSnapshot ->
                     taskSnapshot.metadata?.reference?.downloadUrl
                         ?.addOnSuccessListener { uri ->
-                            map[getString(R.string.photo_url)] = uri.toString()
+                            map[getString(R.string.fr_users_imageUrl)] = uri.toString()
                             updateDatabase(map)
                         }
                 }
@@ -178,14 +178,14 @@ class CreateUserProfileActivity : AppCompatActivity() {
 
     private fun updateDatabase(map: MutableMap<String, Any?>) {
         val user = User(
-            map[getString(R.string.username)] as String,
-            map[getString(R.string.photo_url)] as String?,
-            map[getString(R.string.photo_url)] as String?,
+            map[getString(R.string.fr_users_name)] as String,
+            map[getString(R.string.fr_users_imageUrl)] as String?,
+            map[getString(R.string.fr_users_imageUrl)] as String?,
             firebaseAuth.currentUser!!.uid,
-            map[getString(R.string.status)] as String?
+            map[getString(R.string.fr_users_status)] as String?
         )
 
-        firestore.collection("users").document(firebaseAuth.currentUser!!.uid).set(user)
+        firestore.collection(getString(R.string.fr_users)).document(firebaseAuth.currentUser!!.uid).set(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "Profile created successfully!", Toast.LENGTH_SHORT)
                     .show()

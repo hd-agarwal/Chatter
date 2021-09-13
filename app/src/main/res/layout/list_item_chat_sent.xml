@@ -29,14 +29,14 @@
             app:flexWrap="wrap"
             app:justifyContent="flex_end">
 
-            <TextView
+            <com.vanniktech.emoji.EmojiTextView
                 android:id="@+id/tvContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="5dp"
                 android:textColor="@android:color/white"
-                android:textSize="15sp"
-                tools:text="Hello" />
+                android:textSize="17sp"
+                tools:text="Hello"/>
 
             <TextView
                 android:id="@+id/tvTime"

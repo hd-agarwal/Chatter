@@ -7,12 +7,14 @@ import com.bumptech.glide.Glide
 import com.example.chatter.R
 import com.example.chatter.adapters.ChatAdapter
 import com.example.chatter.models.*
+import com.example.chatter.utils.KeyboardVisibilityUtil
 import com.example.chatter.utils.isSameDayAs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.vanniktech.emoji.ios.IosEmojiProvider
 import com.vanniktech.emoji.EmojiManager
+import com.vanniktech.emoji.EmojiPopup
 import kotlinx.android.synthetic.main.activity_chat.*
 import java.util.*
 
@@ -38,11 +40,20 @@ class ChatActivity : AppCompatActivity() {
     }
     lateinit var currentUser: User
     private val messages= mutableListOf<ChatEvent>()
+    private lateinit var keyboardVisibilityHelper: KeyboardVisibilityUtil
     lateinit var chatAdapter: ChatAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EmojiManager.install(IosEmojiProvider())
         setContentView(R.layout.activity_chat)
+        keyboardVisibilityHelper = KeyboardVisibilityUtil(rootView) {
+            rvMessages.scrollToPosition(messages.size - 1)
+        }
+        val emojiPopup=EmojiPopup.Builder.fromRootView(rootView).build(etMessage)
+        btnEmoji.setOnClickListener {
+            emojiPopup.toggle()
+        }
+
         tvUsername.apply {
             text = friendName
         }
@@ -124,11 +135,11 @@ class ChatActivity : AppCompatActivity() {
             .addOnFailureListener {
 
             }}
-        updateLatsMessage(msgMap)
+        updateLastMessage(msgMap)
 
     }
 
-    private fun updateLatsMessage(message: Message) {
+    private fun updateLastMessage(message: Message) {
         val inboxMap= Inbox(message.content,mCurrentId,friendName!!,friendImageUrl, Date(),0)
         friendId?.let { getInboxRef(mCurrentId, it).setValue(inboxMap).addOnSuccessListener {
             getInboxRef(friendId!!,mCurrentId).addListenerForSingleValueEvent(object: ValueEventListener{

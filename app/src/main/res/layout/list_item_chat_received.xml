@@ -26,13 +26,13 @@
             app:alignItems="flex_end"
             app:flexWrap="wrap"
             app:justifyContent="flex_end">
-            <TextView
+            <com.vanniktech.emoji.EmojiTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvContent"
                 android:textColor="@android:color/white"
                 android:lineSpacingExtra="5dp"
-                android:textSize="15sp"
+                android:textSize="17sp"
                 tools:text="Hello world"/>
             <TextView
                 android:layout_width="wrap_content"

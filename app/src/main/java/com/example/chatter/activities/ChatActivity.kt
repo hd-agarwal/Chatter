@@ -140,7 +140,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun updateLastMessage(message: Message) {
-        val inboxMap= Inbox(message.content,mCurrentId,friendName!!,friendImageUrl, Date(),0)
+        val inboxMap= Inbox(message.content,mCurrentId,friendId!!,friendName!!,friendImageUrl, Date(),0)
         friendId?.let { getInboxRef(mCurrentId, it).setValue(inboxMap).addOnSuccessListener {
             getInboxRef(friendId!!,mCurrentId).addListenerForSingleValueEvent(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -149,6 +149,7 @@ class ChatActivity : AppCompatActivity() {
                         name=currentUser.name
                         imageUrl=currentUser.imageUrl
                         count=1
+                        from=mCurrentId
                     }
                     value?.let{
                         inboxMap.count=it.count+1

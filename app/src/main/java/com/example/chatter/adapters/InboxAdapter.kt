@@ -35,7 +35,7 @@ class InboxAdapter(
             ivUserPhoto.apply { visibility = View.VISIBLE }
             tvStatus.apply {
                 var mess = ""
-                mess += if (item.from.equals(currentUid))
+                mess += if (item.senderId == currentUid)
                     "You: "
                 else
                     "${item.name}: "

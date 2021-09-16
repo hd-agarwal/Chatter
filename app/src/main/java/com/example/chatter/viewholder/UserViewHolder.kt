@@ -9,7 +9,6 @@ import com.example.chatter.R
 import com.example.chatter.models.User
 import kotlinx.android.synthetic.main.list_item_inbox.view.*
 
-
 class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     //    fun bindToGig(gig: Gig, clickListener: View.OnClickListener?) {
 //        tvArtist.setText(gig.getArtist())

@@ -119,11 +119,11 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun markAsRead() {
-        friendId?.let {
-            getInboxRef(mCurrentId,
-                it
-            ).child(getString(R.string.db_chats_count)).setValue(0)
-        }
+//        friendId?.let {
+//            getInboxRef(mCurrentId,
+//                it
+//            ).child(getString(R.string.db_chats_count)).setValue(0)
+//        }
     }
     private fun sendMessage(message: String) {
         val msgId= friendId?.let { getMessagesRef(it).push().key }

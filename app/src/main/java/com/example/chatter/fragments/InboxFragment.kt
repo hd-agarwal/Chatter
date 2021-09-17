@@ -30,7 +30,7 @@ class InboxFragment : Fragment() {
         auth.currentUser?.let {
             FirebaseDatabase.getInstance().reference.child(getString(R.string.db_chats)).child(
                 it.uid
-            ).orderByChild("time/time")
+            )
         }
     }
     private val inboxList = mutableListOf<Inbox>()
@@ -60,17 +60,37 @@ class InboxFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
         }
-        query!!.addChildEventListener(object:ChildEventListener{
+        query!!.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val item=snapshot.getValue(Inbox::class.java)
+                val item = snapshot.getValue(Inbox::class.java)
                 if (item != null) {
-                    inboxList.add(item)
-                    mAdapter.notifyItemInserted(inboxList.size-1)
+                    var i = inboxList.size - 1
+                    while (i >= 0 && item.time > inboxList[i].time) {
+                        i--
+                    }
+                    inboxList.add(i + 1, item)
+                    mAdapter.notifyItemInserted(i + 1)
                 }
 
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val item = snapshot.getValue(Inbox::class.java)
+                if (item != null) {
+                    var i=0
+                    while(inboxList[i].from!=item.from)
+                        i++
+                    inboxList[i]=item
+                    mAdapter.notifyItemChanged(i)
+                    val idx=i
+                    while(i>0&&inboxList[i-1].time<item.time)
+                    {
+                        inboxList[i] = inboxList[i-1]
+                        i--
+                    }
+                    inboxList[i] = item
+                    mAdapter.notifyItemMoved(idx,i)
+                }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {

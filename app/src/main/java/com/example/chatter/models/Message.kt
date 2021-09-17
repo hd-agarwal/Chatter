@@ -13,7 +13,7 @@ data class Message(
     val messageId: String,
     val senderId: String,
     val liked: Boolean = false,
-    val status: Int = 1,
+    var status: Int = 1,
     val type: String = "TEXT",
     override val sentAt: Date = Date()
 ) : ChatEvent {
@@ -25,4 +25,8 @@ data class DateHeader(
     override val sentAt:Date,val context: Context
 ):ChatEvent{
     val date=sentAt.formatAsHeader(context)
+}
+
+data class UnreadHeader(override val sentAt: Date):ChatEvent{
+    constructor():this(Date())
 }

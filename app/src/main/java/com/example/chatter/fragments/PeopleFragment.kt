@@ -120,7 +120,7 @@ class PeopleFragment : Fragment() {
             ): RecyclerView.ViewHolder {
                 return when (viewType) {
                     NORMAL_USER_VIEW -> {
-                        UserViewHolder(layoutInflater.inflate(R.layout.list_item_inbox, parent, false))
+                        UserViewHolder(layoutInflater.inflate(R.layout.list_item_people, parent, false))
                     }
                     else -> {
                         EmptViewHolder(layoutInflater.inflate(R.layout.layout_empty, parent, false))

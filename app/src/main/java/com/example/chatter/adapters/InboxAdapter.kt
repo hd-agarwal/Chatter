@@ -30,7 +30,7 @@ class InboxAdapter(
                 visibility = View.VISIBLE
             }
             Glide.with(this).load(item.imageUrl)
-                .placeholder(R.drawable.ic_default_profile_foreground)
+                .placeholder(R.mipmap.ic_default_profile)
                 .into(ivUserPhoto)
             ivUserPhoto.apply { visibility = View.VISIBLE }
             tvStatus.apply {

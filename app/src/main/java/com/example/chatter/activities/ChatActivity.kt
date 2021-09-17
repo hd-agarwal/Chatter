@@ -44,6 +44,7 @@ class ChatActivity : AppCompatActivity() {
     private val messages= mutableListOf<ChatEvent>()
     private lateinit var keyboardVisibilityHelper: KeyboardVisibilityUtil
     private lateinit var chatAdapter: ChatAdapter
+    private lateinit var listener:ChildEventListener
     private var unreadFound=false
     private var unreadPoint=-1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,33 +88,41 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
+
+    override fun onStop() {
         markAsRead()
+        getMessagesRef(friendId!!).removeEventListener(listener)
+        super.onStop()
     }
 
+    override fun onRestart() {
+        unreadFound=false
+        unreadPoint=-1
+        super.onRestart()
+    }
     private fun listenToMessages() {
+        listener=object:ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val msg=snapshot.getValue(Message::class.java)!!
+                addMessage(msg)
+                markMessageAsRead(msg)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        }
         friendId?.let {
-            getMessagesRef(it).orderByKey().addChildEventListener(object:ChildEventListener{
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    val msg=snapshot.getValue(Message::class.java)!!
-                    addMessage(msg)
-                    markMessageAsRead(msg)
-                }
-
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                }
-
-                override fun onChildRemoved(snapshot: DataSnapshot) {
-                }
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-
-            })
+            getMessagesRef(it).orderByKey().addChildEventListener(listener)
         }
     }
 

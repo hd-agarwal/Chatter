@@ -1,6 +1,7 @@
 package com.example.chatter.adapters
 
 import android.content.Context
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.chatter.R
 import com.example.chatter.models.Inbox
 import com.example.chatter.utils.formatAsHeader
+import com.example.chatter.utils.formatAsTime
 import kotlinx.android.synthetic.main.list_item_inbox.view.*
 
 class InboxAdapter(
@@ -44,7 +46,10 @@ class InboxAdapter(
                 visibility = View.VISIBLE
             }
             tvTime.apply {
-                text = item.time.formatAsHeader(mContext)
+                text = if (DateUtils.isToday(item.time.time))
+                    item.time.formatAsTime()
+                else
+                    item.time.formatAsHeader(mContext)
                 visibility = View.VISIBLE
             }
             tvCount.apply {

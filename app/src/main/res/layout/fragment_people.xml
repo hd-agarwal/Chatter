@@ -37,5 +37,5 @@
         android:layout_height="match_parent"
         android:layout_below="@id/cvShareApp"
         android:id="@+id/rvPeople"
-        tools:listitem="@layout/list_item_inbox"/>
+        tools:listitem="@layout/list_item_people"/>
 </RelativeLayout>

@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.chatter.R
 import com.example.chatter.adapters.ChatAdapter
+import com.example.chatter.adapters.READ
+import com.example.chatter.adapters.SENT
 import com.example.chatter.models.*
 import com.example.chatter.utils.KeyboardVisibilityUtil
 import com.example.chatter.utils.isSameDayAs
@@ -41,7 +43,10 @@ class ChatActivity : AppCompatActivity() {
     lateinit var currentUser: User
     private val messages= mutableListOf<ChatEvent>()
     private lateinit var keyboardVisibilityHelper: KeyboardVisibilityUtil
-    lateinit var chatAdapter: ChatAdapter
+    private lateinit var chatAdapter: ChatAdapter
+    private lateinit var listener:ChildEventListener
+    private var unreadFound=false
+    private var unreadPoint=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EmojiManager.install(IosEmojiProvider())
@@ -64,7 +69,6 @@ class ChatActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 currentUser = it.toObject(User::class.java)!!
             }
-        markAsRead()
         btnSend.setOnClickListener {
             etMessage.text?.let{
                 if(it.isNotEmpty()){
@@ -73,49 +77,76 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         }
-        chatAdapter= ChatAdapter(messages,mCurrentId)
+        chatAdapter= ChatAdapter(messages,mCurrentId,getMessagesRef(friendId!!),getInboxRef(mCurrentId,friendId!!))
         rvMessages.apply{
             layoutManager=LinearLayoutManager(this@ChatActivity)
             adapter=chatAdapter
         }
         listenToMessages()
+        etMessage.setOnClickListener {
+            rvMessages.scrollToPosition(messages.size-1)
+        }
     }
 
+
+    override fun onStop() {
+        markAsRead()
+        getMessagesRef(friendId!!).removeEventListener(listener)
+        super.onStop()
+    }
+
+    override fun onRestart() {
+        unreadFound=false
+        unreadPoint=-1
+        super.onRestart()
+    }
     private fun listenToMessages() {
+        listener=object:ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val msg=snapshot.getValue(Message::class.java)!!
+                addMessage(msg)
+                markMessageAsRead(msg)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        }
         friendId?.let {
-            getMessagesRef(it).orderByKey().addChildEventListener(object:ChildEventListener{
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    val msg=snapshot.getValue(Message::class.java)!!
-                    addMessage(msg)
-                }
-
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildRemoved(snapshot: DataSnapshot) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
+            getMessagesRef(it).orderByKey().addChildEventListener(listener)
         }
     }
 
     private fun addMessage(msg: Message) {
+        if(msg.status== SENT&&msg.senderId!=mCurrentId && !unreadFound)
+        {
+            messages.add(UnreadHeader())
+            unreadFound=true
+            unreadPoint=messages.size
+        }
         val lastItem=messages.lastOrNull()
         if((lastItem!=null&&!lastItem.sentAt.isSameDayAs(msg.sentAt))||lastItem==null)
             messages.add(DateHeader(msg.sentAt,this))
         messages.add(msg)
         chatAdapter.notifyItemInserted(messages.size-1)
         rvMessages.scrollToPosition(messages.size-1)
+    }
+    private fun markMessageAsRead(msg:Message)
+    {
+        if (msg.status == SENT && msg.senderId != mCurrentId) {
+            val eventUpdates: MutableMap<String, Any> = HashMap()
+            eventUpdates["status"] = READ
+            getMessagesRef(friendId!!).child(msg.messageId).updateChildren(eventUpdates)
+        }
     }
 
     private fun markAsRead() {
@@ -140,20 +171,22 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun updateLastMessage(message: Message) {
-        val inboxMap= Inbox(message.content,mCurrentId,friendName!!,friendImageUrl, Date(),0)
-        friendId?.let { getInboxRef(mCurrentId, it).setValue(inboxMap).addOnSuccessListener {
-            getInboxRef(friendId!!,mCurrentId).addListenerForSingleValueEvent(object: ValueEventListener{
+        val inboxMap= Inbox(message.content,mCurrentId,friendId!!,friendName!!,friendImageUrl, Date(),0)
+        friendId?.let { friendId ->
+            getInboxRef(mCurrentId, friendId).setValue(inboxMap).addOnSuccessListener {
+            getInboxRef(this.friendId!!,mCurrentId).addListenerForSingleValueEvent(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val value=snapshot.getValue(Inbox::class.java)
                     inboxMap.apply{
                         name=currentUser.name
                         imageUrl=currentUser.imageUrl
                         count=1
+                        from=mCurrentId
                     }
                     value?.let{
                         inboxMap.count=it.count+1
                     }
-                    getInboxRef(friendId!!,mCurrentId).setValue(inboxMap)
+                    getInboxRef(this@ChatActivity.friendId!!,mCurrentId).setValue(inboxMap)
                 }
 
                 override fun onCancelled(error: DatabaseError) {

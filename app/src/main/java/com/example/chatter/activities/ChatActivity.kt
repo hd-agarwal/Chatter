@@ -6,11 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.chatter.R
 import com.example.chatter.adapters.ChatAdapter
-import com.example.chatter.adapters.READ
-import com.example.chatter.adapters.SENT
 import com.example.chatter.models.*
-import com.example.chatter.utils.KeyboardVisibilityUtil
-import com.example.chatter.utils.isSameDayAs
+import com.example.chatter.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,9 +17,6 @@ import com.vanniktech.emoji.EmojiPopup
 import kotlinx.android.synthetic.main.activity_chat.*
 import java.util.*
 
-const val NAME = "name"
-const val UID = "uid"
-const val IMAGE_URL = "imageUrl"
 
 class ChatActivity : AppCompatActivity() {
     private val friendId by lazy {
@@ -90,7 +84,7 @@ class ChatActivity : AppCompatActivity() {
 
 
     override fun onStop() {
-        markAsRead()
+//        markAsRead()
         getMessagesRef(friendId!!).removeEventListener(listener)
         super.onStop()
     }

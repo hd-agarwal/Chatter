@@ -90,8 +90,8 @@ fun Date.formatAsFull(context: Context, abbreviated: Boolean = false): String {
         SimpleDateFormat("d $month YYYY", getCurrentLocale(context))
             .format(this)
     } else {
-        SimpleDateFormat("d $month yyyy", getCurrentLocale(context))
-            .format(this)    }
+            SimpleDateFormat("d $month yyyy", getCurrentLocale(context))
+                .format(this)    }
 }
 
 fun Date.formatAsListItem(context: Context): String {

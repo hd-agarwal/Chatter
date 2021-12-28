@@ -4,8 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.21354166666666666" />
+        <entry key="..\:/Users/HARSH/AndroidStudioProjects/Chatter/app/src/main/res/layout/list_item_inbox.xml" value="0.1" />
+        <entry key="..\:/Users/HARSH/AndroidStudioProjects/Chatter/app/src/main/res/layout/list_item_unread_header.xml" value="0.22" />
         <entry key="app/src/main/res/drawable/count_background.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/drawable/ic_baseline_chat_bubble_outline_24.xml" value="0.2712962962962963" />
+        <entry key="app/src/main/res/drawable/ic_baseline_contacts_24.xml" value="0.2712962962962963" />
+        <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_chat_send.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/drawable/ic_defaultProfile_foreground.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout-v28/list_item_chat_received.xml" value="0.1925925925925926" />
+        <entry key="app/src/main/res/layout-v28/list_item_chat_sent.xml" value="0.1925925925925926" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_create_user_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1984375" />
@@ -20,6 +29,11 @@
         <entry key="app/src/main/res/layout/layout_contact.xml" value="0.2775800711743772" />
         <entry key="app/src/main/res/layout/layout_empty.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/layout_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_chat_received.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_chat_sent.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_date_header.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_inbox.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_people.xml" value="0.22" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1984375" />
       </map>
     </option>
@@ -29,5 +43,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.33" />
+      </ProjectState>
+    </option>
   </component>
 </project>

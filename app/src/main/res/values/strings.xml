@@ -1,10 +1,35 @@
 <resources>
-    <!--    Firestore realtime database keys-->
-    <string name="users">users</string>
-    <string name="username">username</string>
-    <string name="status">status</string>
-    <string name="phone_number">phone_number</string>
-    <string name="photo_url">photo_url</string>
+    <!--    Firestore database keys-->
+    <string name="fr.users">users</string>
+    <string name="fr.users.name">name</string>
+    <string name="fr.users.imageUrl">imageUrl</string>
+    <string name="fr.users.thumbUrl">thumbUrl</string>
+    <string name="fr.users.uid">uid</string>
+    <string name="fr.users.deviceToken">deviceToken</string>
+    <string name="fr.users.status">status</string>
+    <string name="fr.users.lastOnline">lastOnline</string>
+    <string name="fr.users.onlineStatus">onlineStatus</string>
+
+    <!--    Realtime database keys-->
+    <string name="db.chats">chats</string>
+    <string name="db.chats.count">count</string>
+    <string name="db.chats.from">from</string>
+    <string name="db.chats.imageUrl">imageUrl</string>
+    <string name="db.chats.message">message</string>
+    <string name="db.chats.time">time</string>
+    <string name="db.chats.name">name</string>
+
+    <string name="db.messages">messages</string>
+    <string name="db.messages.liked">liked</string>
+    <string name="db.messages.content">content</string>
+    <string name="db.messages.messageId">messageId</string>
+    <string name="db.messages.senderId">senderId</string>
+    <string name="db.messages.status">status</string>
+    <string name="db.messages.type">type</string>
+    <string name="db.messages.sentAt">sentAt</string>
+
+    <!--    Storage keys-->
+    <string name="st.profile_photos">profile_photos</string>
 
 
     <string name="app_name">Chatter</string>
@@ -21,8 +46,8 @@
     <string name="continue_button_text">Continue</string>
     <string name="change_profile_button_text">Change</string>
     <string name="delete_profile_pic">Delete profile pic</string>
-    <string name="chats">Chats</string>
     <string name="groups">Groups</string>
+    <string name="chats">Chats</string>
     <string name="contacts">Contacts</string>
 
     <string name="today">Today</string>

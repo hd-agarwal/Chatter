@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatter.R
 import com.example.chatter.activities.ChatActivity
-import com.example.chatter.activities.IMAGE_URL
-import com.example.chatter.activities.NAME
-import com.example.chatter.activities.UID
 import com.example.chatter.models.User
+import com.example.chatter.utils.IMAGE_URL
+import com.example.chatter.utils.NAME
+import com.example.chatter.utils.UID
 import com.example.chatter.viewholder.EmptViewHolder
 import com.example.chatter.viewholder.UserViewHolder
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
@@ -120,7 +120,7 @@ class PeopleFragment : Fragment() {
             ): RecyclerView.ViewHolder {
                 return when (viewType) {
                     NORMAL_USER_VIEW -> {
-                        UserViewHolder(layoutInflater.inflate(R.layout.layout_user, parent, false))
+                        UserViewHolder(layoutInflater.inflate(R.layout.list_item_people, parent, false))
                     }
                     else -> {
                         EmptViewHolder(layoutInflater.inflate(R.layout.layout_empty, parent, false))

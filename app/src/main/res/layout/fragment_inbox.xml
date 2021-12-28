@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ChatsFragment">
+    tools:context=".fragments.InboxFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Chats frag"
-        android:textSize="30sp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/rvInbox"
+        tools:listitem="@layout/list_item_inbox"/>
 </RelativeLayout>

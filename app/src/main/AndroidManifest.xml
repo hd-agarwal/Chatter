@@ -29,14 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DashboardActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Chatter.Dashboard" />
-        <activity
             android:name=".activities.CreateUserProfileActivity"
-            android:exported="true" />
-        <activity
-            android:name=".LoginActivity"
             android:exported="true" />
     </application>
 

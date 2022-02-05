@@ -14,8 +14,6 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.list_item_chat_sent.view.*
 import kotlinx.android.synthetic.main.list_item_date_header.view.*
 
-const val SENT = 1
-const val READ = 2
 
 class ChatAdapter(
     private val list: MutableList<ChatEvent>,

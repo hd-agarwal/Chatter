@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatter.R
 import com.example.chatter.activities.ChatActivity
-import com.example.chatter.activities.IMAGE_URL
-import com.example.chatter.activities.NAME
-import com.example.chatter.activities.UID
 import com.example.chatter.adapters.InboxAdapter
 import com.example.chatter.models.Inbox
+import com.example.chatter.utils.IMAGE_URL
+import com.example.chatter.utils.NAME
+import com.example.chatter.utils.UID
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
